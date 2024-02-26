@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.outer-card {
+    width: calc(100% - 50px);
+    height: calc(100vh - 150px); /* Adjusted to take up almost the entire height */
+    padding: 10px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.inner-card {
+    width: 550px;
+    height: 450px;
+    max-height: 450px;
+    border-radius: 10px 10px 100px 10px;
+    background-color: #fff;
+
+    .content{
+        padding: 30px;
+    }
+}
+
+.year {
+    background-color: red;
+}
+
+svg{
+    border: 1px solid;
+}
+
+textarea {
+    box-sizing: border-box;
+    background-color: antiquewhite;
+  }
+  
