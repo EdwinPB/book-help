@@ -16,7 +16,7 @@ import (
 
 	"image/png"
 
-	"github.com/fogleman/gg"
+	"github.com/mskrha/svg2png"
 )
 
 type Question struct {
@@ -109,23 +109,37 @@ func quoteHandler(w http.ResponseWriter, r *http.Request) {
 
 func convertSVGToPNG(svgContent string) (image.Image, error) {
 	// Create a new drawing context
-	const (
-		width  = 100
-		height = 100
-	)
-	dc := gg.NewContext(width, height)
+	// const (
+	// 	width  = 100
+	// 	height = 100
+	// )
+	// dc := gg.NewContext(width, height)
 
-	// Draw the SVG onto the drawing context
-	dc.SetRGB(1, 1, 1) // Set background color to white
-	dc.Clear()
-	dc.SetRGB(0, 0, 0)                                       // Set drawing color to black
-	dc.LoadFontFace("static/Poppins-Bold.ttf", 12)           // Adjust the font path
-	dc.DrawStringAnchored("Danier", width, height, 0.5, 0.5) // Draw text
+	// // Draw the SVG onto the drawing context
+	// dc.SetRGB(1, 1, 1) // Set background color to white
+	// dc.Clear()
+	// dc.SetRGB(0, 0, 0)                                       // Set drawing color to black
+	// dc.LoadFontFace("static/Poppins-Bold.ttf", 12)           // Adjust the font path
+	// dc.DrawStringAnchored("Danier", width, height, 0.5, 0.5) // Draw text
 
-	// Resize the image if needed
-	resizedImage := dc.Image()
+	// // Resize the image if needed
+	// resizedImage := dc.Image()
+	b := []byte(svgContent)
+	converter := svg2png.New()
 
-	return resizedImage, nil
+	// converter.SetBinary(svgContent)
+	output, err := converter.Convert(b)
+	if err != nil {
+		fmt.Println(err)
+		return nil, nil
+	}
+
+	img, _, _ := image.Decode(bytes.NewReader(output))
+
+	if img == nil {
+		fmt.Println("Your don't have an image body")
+	}
+	return img, nil
 }
 
 func makeOpenAIRequest(phrase string) (string, error) {
